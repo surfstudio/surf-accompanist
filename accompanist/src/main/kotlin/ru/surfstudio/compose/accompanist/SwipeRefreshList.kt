@@ -134,22 +134,22 @@ fun <T : Any> SwipeRefreshList(
                     .alpha(if (items.loadState.refresh !is LoadState.Loading) 1f else 0f)
             ) {
                 itemsIndexed(items) { index, item ->
-                    item?.let {
+                    if (item != null) {
                         content.invoke(index, item)
                     }
                 }
                 items.apply {
                     if (loadState.append is LoadState.Loading) {
                         item {
-                            contentLoadState?.let {
-                                contentLoadState.invoke(LoadState.Loading)
-                            } ?: run {
+                            if (contentLoadState == null) {
                                 CircularProgressIndicator(
                                     modifier = Modifier
                                         .fillMaxWidth()
                                         .padding(16.dp)
                                         .wrapContentWidth(Alignment.CenterHorizontally)
                                 )
+                            } else {
+                                contentLoadState.invoke(LoadState.Loading)
                             }
                         }
                     }
@@ -164,9 +164,9 @@ fun <T : Any> SwipeRefreshList(
         }
     }
 
-    isErrorPage?.let { error ->
-        error.error.let { Log.e(TAG, it::class.java.simpleName) }
-        error.error.localizedMessage?.let { Log.e(TAG, it) }
+    isErrorPage?.apply {
+        error.let { Log.e(TAG, it::class.java.simpleName) }
+        error.localizedMessage?.let { Log.e(TAG, it) }
         contentError?.invoke()
     } ?: run {
         when {
