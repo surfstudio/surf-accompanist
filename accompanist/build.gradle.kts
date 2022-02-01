@@ -7,7 +7,7 @@ plugins {
 
 // dependencies versions
 val composeVersion: String = findProperty("composeVersion") as? String ?: "1.0.5"
-val accompanistVersion: String = findProperty("accompanistVersion") as? String ?: "0.22.0-rc"
+val accompanistVersion: String = findProperty("googleAccompanistVersion") as? String ?: "0.22.0-rc"
 
 // lib info
 val libVersion: String by project
@@ -69,16 +69,11 @@ android {
 }
 
 dependencies {
-
-    implementation("ru.surfstudio.compose:modifier-ext:0.0.13")
-
     implementation("androidx.compose.ui:ui:$composeVersion")
     implementation("androidx.compose.material:material:$composeVersion")
     implementation("androidx.paging:paging-compose:1.0.0-alpha14")
-    implementation("androidx.navigation:navigation-compose:2.4.0-rc01")
-
-    implementation("androidx.fragment:fragment-ktx:1.4.0")
-
+    implementation("androidx.navigation:navigation-compose:2.5.0-alpha01")
+    implementation("androidx.fragment:fragment-ktx:1.4.1")
     implementation("com.google.accompanist:accompanist-insets:$accompanistVersion")
     implementation("com.google.accompanist:accompanist-pager:$accompanistVersion")
     implementation("com.google.accompanist:accompanist-swiperefresh:$accompanistVersion")

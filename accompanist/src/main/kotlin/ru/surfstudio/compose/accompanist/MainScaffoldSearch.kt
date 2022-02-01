@@ -101,16 +101,21 @@ fun MainScaffoldSearch(
     val requester = remember { FocusRequester() }
     val focusManager = LocalFocusManager.current
 
+
+
     Scaffold(
         modifier = modifier,
-        topBar = contentTitle?.let {
+        topBar =
+        if (contentTitle == null) {
+            {}
+        } else {
             {
                 TopAppBar(
                     backgroundColor = topBarBackgroundColor,
                     elevation = topBarElevation,
                     title = {
                         Box {
-                            searchListener?.let {
+                            if (searchListener != null) {
                                 if (isShowSearch) {
                                     if (state.getValue().isEmpty()) {
                                         Text(
@@ -131,7 +136,11 @@ fun MainScaffoldSearch(
                                                     state.positionToEnd()
                                                 }
                                             },
-                                        textStyle = MaterialTheme.typography.h5.merge(TextStyle(color = searchTextColor)),
+                                        textStyle = MaterialTheme.typography.h5.merge(
+                                            TextStyle(
+                                                color = searchTextColor
+                                            )
+                                        ),
                                         keyboardOptions = KeyboardOptions.Default.copy(
                                             capitalization = KeyboardCapitalization.Sentences,
                                             imeAction = ImeAction.Search
@@ -149,7 +158,7 @@ fun MainScaffoldSearch(
                                 } else {
                                     contentTitle.invoke()
                                 }
-                            } ?: run {
+                            } else {
                                 Column(
                                     modifier = Modifier
                                         .padding(end = if (navigationIcon == null) 12.dp else 0.dp)
@@ -160,7 +169,7 @@ fun MainScaffoldSearch(
                             }
                         }
                     },
-                    navigationIcon = navigationBodyIcon ?: navigationIcon?.let {
+                    navigationIcon = navigationBodyIcon ?: if (navigationIcon != null) {
                         {
                             IconButton(onClick = navigationIconOnClick) {
                                 Icon(
@@ -170,9 +179,9 @@ fun MainScaffoldSearch(
                                 )
                             }
                         }
-                    },
+                    } else null,
                     actions = {
-                        searchListener?.let {
+                        if (searchListener != null) {
                             IconButton(onClick = {
                                 state.clear()
                                 isShowSearch = !isShowSearch
@@ -219,7 +228,7 @@ fun MainScaffoldSearch(
                     }
                 )
             }
-        } ?: {},
+        },
         content = {
             content.invoke(it)
         },

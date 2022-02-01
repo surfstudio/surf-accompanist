@@ -41,7 +41,6 @@ import kotlinx.coroutines.launch
 import ru.surfstudio.compose.accompanist.R
 import ru.surfstudio.compose.accompanist.keyboard.vibration.Effect
 import ru.surfstudio.compose.accompanist.keyboard.vibration.VibratorCompat.getVibrator
-import ru.surfstudio.compose.modifier.ifTrue
 
 /**
  * Custom keyboard
@@ -220,14 +219,7 @@ private fun ViewKeyboardKey(
         shape = shape
     ) {
         Box(
-            modifier = Modifier
-                .ifTrue(isEnabled) {
-                    then(
-                        clickable {
-                            onPress.invoke(value)
-                        }
-                    )
-                }
+            (if (isEnabled) Modifier.clickable { onPress.invoke(value) } else Modifier)
                 .fillMaxSize(),
         ) {
             Text(
