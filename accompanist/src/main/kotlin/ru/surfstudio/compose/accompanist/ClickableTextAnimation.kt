@@ -27,7 +27,8 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 /**
- * Clickable text color animation
+ * Clickable text color animation.
+ * For borderless buttons prefer `androidx.compose.material.TextButton`
  *
  * @param modifier Modifier to apply to this layout node.
  * @param colorDefault Color for default state.

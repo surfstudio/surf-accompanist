@@ -51,6 +51,7 @@ private val state: MutableStateFlow<Boolean> = MutableStateFlow(true)
  *
  * @author Vitaliy Zarubin
  */
+@Deprecated("Remains as an idea. Use `androidx.compose.material.BottomSheetScaffold` instead")
 @Composable
 fun BaseBottomSheetScaffold(
     isShow: Boolean,
