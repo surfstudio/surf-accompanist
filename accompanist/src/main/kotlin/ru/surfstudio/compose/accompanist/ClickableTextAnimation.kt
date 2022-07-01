@@ -23,6 +23,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.*
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.style.TextOverflow
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
@@ -69,6 +71,7 @@ fun ClickableTextColorAnimation(
     onClick: () -> Unit,
 ) {
     val scope = rememberCoroutineScope()
+    var job: Job? by remember { mutableStateOf(null) }
     var click: Boolean by remember { mutableStateOf(false) }
     val color = remember { Animatable(colorDefault) }
 
@@ -91,7 +94,8 @@ fun ClickableTextColorAnimation(
     ) {
         if (enabled) {
             click = true
-            scope.launch {
+            job?.cancel()
+            job = scope.launch {
                 delay(delay)
                 onClick.invoke()
                 click = false
